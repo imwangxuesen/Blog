@@ -452,4 +452,11 @@ uint32_t alignedInstanceSize() {
 
 然后我们再了解一下[内存对齐](http://www.cnblogs.com/TenosDoIt/p/3590491.html)的概念，也就不言而喻了
 
+#总结：
+1，OC中的对象是按16字节的倍数来分配内存的，会存在内存对齐的问题。
+2，使用class_getInstanceSize获取的也并不是实际的对象、指针的内存空间，也会存在内存对齐问题。
+3，基础类型变量的会比对象类型要节省内存。
+4，源码解释一切。
+
+
 
