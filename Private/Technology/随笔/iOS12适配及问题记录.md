@@ -58,3 +58,15 @@
     return state;
 }
 ```
+
+### 2,[UIImage imageNamed:]不能正常加载Assets中的图片
+
+解决：
+将图片放到bundle中
+使用一下方式加载即可
+```    
+NSString *path = [[NSBundle mainBundle] pathForResource:@"bg_login" ofType:@"png"];
+_backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
+```
+这个不能正常加载的情况只出现在个别的地方，目前找到的共性是加载的图片偏大，其他并没有头绪，感觉像是测试版本的Bug，google也没有人解答此类问题，后续会继续关注。
+
