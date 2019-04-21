@@ -1,0 +1,99 @@
+golang 学习笔记
+
+2019-04-12
+
+
+1.赋值和定义变量可以多个一起
+
+i, j := “2”, 2
+
+
+:= 符号就可以被编译器解析成声明并赋值
+
+“i”会被声明并初始化为string “2”
+j会被声明并初始化为int 2
+
+
+2.如果需要显式的生命变量的类型
+
+var j string
+
+声明并赋值
+
+var j string = "2"
+
+但是并不能在使用 var j string 这种形式生命变量后再使用 := 会编译报错：eg
+
+var j string
+j := "2" // 编译报错
+
+
+3.同时声明多个变量
+var (
+	a string
+	b int
+)
+
+4.多参数返回方法定义
+func 方法名(形参1 形参1类型, 形参2 形参2类型...) (返回值1 返回值1类型, 返回值2 返回值2类型...)
+eg
+func getName(idNum string, age int) (name string)
+
+5.
+const (
+		Sunday = iota
+        Monday
+        Tuesday
+        Wednesday
+        Thursday
+        Friday
+        Saturday
+        numberOfDays // 这个常量没有导出
+        )
+同Go语言的其他符号(symbol)一样，以大写字母开头的常量在包外可见。
+以上例子中numberOfDays为包内私有，其他符号则可被其他包访问
+
+6.
+不同类型的数值不能进行比较
+
+eg
+
+var i int32
+var j int64
+
+i, j = 1, 2
+
+if i == j { // 编译错误
+	
+}
+
+7.
+Go语言中的浮点类型 采用IEEE-754标准的表达方式。
+
+var fvalue1 float32
+fvalue1 = 12 
+fvalue2 := 12.0 // 如果不加小数点，fvalue2会被推导为整型而不是浮点型，自动被推导成float64
+
+
+8.
+浮点数比较
+因为浮点数不是一种精确的表达方式，所以像整型那样直接用==来判断两个浮点数是否相等 是不可行的，这可能会导致不稳定的结果。
+  下面是一种推荐的替代方案:
+import "math"
+// p为用户自定义的比较精度，比如0.00001 
+func IsEqual(f1, f2, p float64) bool {
+	return math.Fdim(f1, f2) < p 
+}
+
+9.
+ansi编码
+不同的国家和地区制定了不同的标准，由此产生了 GB2312、GBK、Big5、Shift_JIS 等各自的编码标准。这些使用 1 至 4 个字节来代表一个字符的各种汉字延伸编码方式，称为 ANSI 编码
+
+在简体中文Windows操作系统中，ANSI 编码代表 GBK 编码；在日文Windows操作系统中，ANSI 编码代表 Shift_JIS 编码。 不同 ANSI 编码之间互不兼容
+
+0x00~0x7F之间的字符，依旧是1个字节代表1个字符
+
+Unicode编码
+Unicode（统一码、万国码、单一码）是计算机科学领域里的一项业界标准，包括字符集、编码方案等。Unicode 是为了解决传统的字符编码方案的局限而产生的，它为每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求
+UTF-8、UTF-16、UTF-32都是将数字转换到程序数据的编码方案
+
